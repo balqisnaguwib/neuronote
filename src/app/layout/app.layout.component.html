@@ -1,14 +1,15 @@
 <div class="layout-wrapper" [ngClass]="containerClass">
     <app-topbar></app-topbar>
-    <div class="layout-sidebar">
-        <app-sidebar></app-sidebar>
-    </div>
     <div class="layout-main-container">
-        <div class="layout-main">
-            <router-outlet></router-outlet>
+        <div class="layout-sidebar">
+            <app-sidebar></app-sidebar>
         </div>
-        <app-footer></app-footer>
+        <div class="layout-main">
+            <div class="content-container">
+                <router-outlet></router-outlet>
+            </div>
+            <app-footer></app-footer>
+        </div>
     </div>
-    <!-- <app-config></app-config> -->
-    <div class="layout-mask"></div>
+    <div class="layout-mask" (click)="layoutService.onMenuToggle()"></div>
 </div>

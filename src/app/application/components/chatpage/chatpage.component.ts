@@ -24,6 +24,7 @@ export class ChatpageComponent implements OnInit {
   hideProgressBar: boolean = true;
   confirmButton: boolean = false;
   visible: boolean = false;
+  showWelcome: boolean = true;
 
   messageHistory = [];
   messages: Message[] = [];
@@ -33,15 +34,15 @@ export class ChatpageComponent implements OnInit {
   newMessage: string = '';
   tempMessage: string = '';
   personalInfo: any;
-
+  typingIndicator: boolean = false;
 
   // audio recording
   isRecording = false;
+  recordingDuration: number = 0;
+  recordingInterval: any;
   mediaRecorder!: MediaRecorder;
   audioChunks: Blob[] = [];
   audioUrl: string | null = null;
-
-
 
   constructor(
     private route: ActivatedRoute,
@@ -56,6 +57,11 @@ export class ChatpageComponent implements OnInit {
     this.personalInfo = JSON.parse(window.sessionStorage.getItem(`personalInfo`)) ?? null
     console.log(this.personalInfo)
     this.clearMessage();
+    
+    // Add animation delay for welcome message
+    setTimeout(() => {
+      this.showWelcome = false;
+    }, 5000);
   }
 
   async doneDraft(){
@@ -83,13 +89,18 @@ export class ChatpageComponent implements OnInit {
 
   async sendMessage() {
       try {
+          if (this.newMessage.trim() === '') return;
+          
           this.tempMessage = this.newMessage;
-          if (this.newMessage.trim() !== '') {
-            this.messages.push({ role: 'user', content: this.tempMessage });
-          }
+          this.messages.push({ role: 'user', content: this.tempMessage });
           this.newMessage = '';
           this.hideProgressBar = false;
           this.confirmButton = false;
+          
+          // Show typing indicator
+          this.typingIndicator = true;
+          this.scrollToBottom();
+          
           const response = await fetch('https://llm.nnoc.cloud:8842/neuranotelima/conversation/', {
             method: 'POST',
             headers: {
@@ -97,7 +108,11 @@ export class ChatpageComponent implements OnInit {
                 'x-api-key': 'sdvW398493llweih4jnIsfNVEIOsdfdsN349058JLKNdewfdWsdBEFJKBSDDF'
             },
             body: JSON.stringify({messages: this.messages})
-          })
+          });
+
+          // Artificial delay for better UX
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          this.typingIndicator = false;
 
           if (response.ok){
             let res = await response.json();
@@ -110,17 +125,22 @@ export class ChatpageComponent implements OnInit {
                const report = {...this.personalInfo, ...robotResponse};
                console.log(report)
                let draftReport = Object.entries(report).filter(([k, _]) => k !== 'status_keterangan' && k !== 'laporan_polis').map(([k, v]) => (`${k.toLocaleUpperCase()}: ${v}`)).join('\n')
-               //report = Object.entries(report).map(([k, v]) => (`${k.toLocaleUpperCase()}: ${v}`)).join('\n')
                this.messages.push({ content: draftReport, role: 'system'});
                this.confirmButton = true;
                window.sessionStorage.setItem('draftReport', JSON.stringify(robotResponse));
                this.sessionStorageService.updateStatus();
-               this.messageService.add({severity:'success', summary: 'Draf Laporan Disimpan!', detail: 'Sila semak dan sahkan butiran-butiran anda.'});
+               this.messageService.add({
+                 severity:'success', 
+                 summary: 'Draf Laporan Disimpan!', 
+                 detail: 'Sila semak dan sahkan butiran-butiran anda.',
+                 life: 3000
+               });
             }
             
             this.notificationSound.nativeElement.play();
             this.hideProgressBar = true;
             this.cdr.detectChanges();
+            this.scrollToBottom();
           }
           else {
               throw new Error(response['message'] ?? response['detail'] ?? 'Failed to add data');
@@ -128,6 +148,13 @@ export class ChatpageComponent implements OnInit {
 
       } catch (error) {
           console.error(error);
+          this.typingIndicator = false;
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Tidak dapat menghantar mesej. Sila cuba lagi.',
+            life: 3000
+          });
       } finally {
           this.hideProgressBar = true;
       }
@@ -135,11 +162,22 @@ export class ChatpageComponent implements OnInit {
 
   async toggleRecording() {
     if (this.isRecording) {
+      clearInterval(this.recordingInterval);
+      this.recordingDuration = 0;
       this.mediaRecorder.stop(); // Stop recording
     } else {
       await this.startRecording(); // Start recording
+      this.recordingInterval = setInterval(() => {
+        this.recordingDuration++;
+      }, 1000);
     }
     this.isRecording = !this.isRecording;
+  }
+
+  getRecordingTime(): string {
+    const minutes = Math.floor(this.recordingDuration / 60);
+    const seconds = this.recordingDuration % 60;
+    return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
   }
 
   async startRecording() {
@@ -161,38 +199,63 @@ export class ChatpageComponent implements OnInit {
           type: 'audio/webm',
         });
         formData.append('file', audioFile);
+        
+        // Show loading state
+        this.typingIndicator = true;
+        this.scrollToBottom();
+        
         const response = await fetch('https://llm.nnoc.cloud:8842/neuranotelima/transcribe/', {
           method: 'POST',
           headers: {
               'x-api-key': 'sdvW398493llweih4jnIsfNVEIOsdfdsN349058JLKNdewfdWsdBEFJKBSDDF',
-              //'Content-Type': 'multipart/form-data',
           },
           body: formData
-        })
+        });
+
+        // Hide typing indicator after transcription
+        this.typingIndicator = false;
 
         console.log(response);
         if (response.ok){
           let res = await response.json();
           let userScript = res['transcription'];
+          
+          // Show success message
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Audio ditranskripsi',
+            detail: 'Audio anda telah ditranskripsi dengan berjaya',
+            life: 2000
+          });
+          
           this.messages.push({ content: userScript, role: 'user'});
           this.cdr.detectChanges();
+          this.scrollToBottom();
           await this.sendMessage();
         } else {
           console.error("Error transcribing audio:", response.statusText);
-          this.messageService.add({severity:'error', summary: 'Error transcribing audio', detail: response.statusText});
+          this.messageService.add({
+            severity:'error', 
+            summary: 'Ralat transkripsi audio', 
+            detail: response.statusText,
+            life: 3000
+          });
         }
       };
 
       this.mediaRecorder.start();
     } catch (err) {
       console.error('Failed to start recording:', err);
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Ralat Mikrofon',
+        detail: 'Tidak dapat mengakses mikrofon anda. Sila pastikan mikrofon berfungsi.',
+        life: 3000
+      });
     } finally {
       this.hideProgressBar = true;
     }
-
   }
-
-
 
   async callTTSAPI(message: any) {
     try {
@@ -206,7 +269,6 @@ export class ChatpageComponent implements OnInit {
         body: JSON.stringify({
           text: message
         }),
-        // credentials: 'include' // Add this line if the server requires credentials
       });
 
       if (ttsResponse.ok) {
@@ -215,7 +277,6 @@ export class ChatpageComponent implements OnInit {
         var audioUrl = URL.createObjectURL(blob);
         const audioElement = new Audio(audioUrl);
         this.audioMessages.push(audioElement);
-        // audioElement.play();
       } else {
         this.audioMessages.push("Error");
         console.error("TTS API call failed:", ttsResponse.statusText);
@@ -260,7 +321,6 @@ export class ChatpageComponent implements OnInit {
             this.currentAudio = null;
             this.playingIndex = null;
           }, { once: true }); // Use { once: true } to remove the event listener after it triggers
-
         }
       }
     } else {
@@ -268,6 +328,13 @@ export class ChatpageComponent implements OnInit {
     }
   }
   
+  handleKeyDown(event: KeyboardEvent) {
+    // Send message on Enter without Shift key
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      this.sendMessage();
+    }
+  }
 
   ngAfterViewChecked() {
     this.scrollToBottom();
@@ -275,7 +342,9 @@ export class ChatpageComponent implements OnInit {
 
   scrollToBottom(): void {
     try {
-      this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+      if (this.messagesContainer) {
+        this.messagesContainer.nativeElement.scrollTop = this.messagesContainer.nativeElement.scrollHeight;
+      }
     } catch(err) {
       console.error("Error scrolling to bottom:", err);
     }

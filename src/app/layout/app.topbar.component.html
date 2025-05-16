@@ -1,19 +1,58 @@
 <div class="layout-topbar">
-    <!-- <img src="assets/layout/images/logo.png" alt="background" style="max-width: 100%; height: auto;" class="mb-0 w-1rem flex-shrink-0" /> -->
-    <img src="assets/layout/images/NEURANOTE.png" alt="background" style="max-width: 100%; height: auto;" class="mb-0 w-3rem flex-shrink-0" />
-    <button #menubutton class="p-link layout-menu-button layout-topbar-button" *ngIf="showSidebarIcon" (click)="layoutService.onMenuToggle()">
-        <i class="pi pi-bars" ></i>
-    </button>
-
-    <!-- <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
-        <i class="pi pi-ellipsis-v"></i>
-    </button>
-
-    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
-        <button class="p-link layout-topbar-button" [routerLink]="''" (click)="authService.logout()">
-            <i class="pi pi-sign-out"></i>
-            <span>Log out</span>
+    <div class="topbar-left">
+        <button #menubutton class="menu-button" *ngIf="showSidebarIcon" (click)="layoutService.onMenuToggle()">
+            <i class="pi pi-bars"></i>
         </button>
-       
-    </div> -->
+        
+        <div class="logo-container">
+            <img src="assets/layout/images/NEURANOTE.png" alt="Neuranote Logo" class="app-logo" />
+            <span class="app-name">NEURANOTE LIMA</span>
+        </div>
+    </div>
+    
+    <div class="topbar-right">
+        <button #topbarmenubutton class="user-menu-button" (click)="layoutService.showProfileSidebar()">
+            <i class="pi pi-user"></i>
+        </button>
+
+        <div #topbarmenu class="profile-menu" [ngClass]="{'profile-menu-active': layoutService.state.profileSidebarVisible}">
+            <div class="profile-menu-header">
+                <div class="user-avatar">
+                    <i class="pi pi-user"></i>
+                </div>
+                <div class="user-info">
+                    <span class="user-name">Pengguna</span>
+                    <span class="user-role">Pengguna Sistem</span>
+                </div>
+            </div>
+            
+            <ul class="profile-menu-items">
+                <li>
+                    <a (click)="navigateTo('/personalinfo')">
+                        <i class="pi pi-user-edit"></i>
+                        <span>Maklumat Peribadi</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="navigateTo('/chatpage')">
+                        <i class="pi pi-comments"></i>
+                        <span>Bot Perbualan</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="navigateTo('/dashboard')">
+                        <i class="pi pi-file-edit"></i>
+                        <span>Laporan Polis</span>
+                    </a>
+                </li>
+                <li class="menu-separator"></li>
+                <li>
+                    <a (click)="logout()">
+                        <i class="pi pi-sign-out"></i>
+                        <span>Log Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>

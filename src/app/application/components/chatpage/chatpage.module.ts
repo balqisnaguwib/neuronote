@@ -46,7 +46,7 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputGroupModule } from 'primeng/inputgroup';
 import { IonicModule } from '@ionic/angular';
 import { IonicStorageModule } from '@ionic/storage-angular';
-
+import { NewlinePipe } from '../../pipes/newline.pipe';
 
 @NgModule({
     imports: [
@@ -100,10 +100,14 @@ import { IonicStorageModule } from '@ionic/storage-angular';
         ButtonModule,
         InputGroupModule,
         InputGroupAddonModule,
+        TooltipModule,
         IonicModule,
         IonicStorageModule.forRoot(),
     ],
-    declarations: [ChatpageComponent],
+    declarations: [
+        ChatpageComponent,
+        NewlinePipe
+    ],
     providers: [],
     bootstrap: [ChatpageComponent],
 })

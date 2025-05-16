@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* Updated Global Styles with iOS 18-inspired design */
 
 $gutter: 1rem; //for primeflex grid system
 @import "assets/layout/styles/layout/layout.scss";
@@ -12,5 +12,323 @@ $gutter: 1rem; //for primeflex grid system
 @import "assets/application/styles/flags/flags.css";
 @import "assets/application/styles/badges.scss";
 @import "assets/application/styles/code.scss";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Custom iOS 18-inspired theme */
+:root {
+  /* Primary colors */
+  --primary-orange: #FF7A00;
+  --primary-blue: #0075FF;
+  --secondary-blue: #0063D1;
+  --light-blue: #E6F2FF;
+  
+  /* Neutral colors */
+  --background-light: #F8F8FA;
+  --surface-card: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #6B6B6B;
+  --border-color: #E0E0E5;
+  
+  /* Status colors */
+  --success-color: #34C759;
+  --warning-color: #FF9500;
+  --danger-color: #FF3B30;
+  --info-color: #32ADE6;
+  
+  /* Animation */
+  --transition-fast: 0.2s;
+  --transition-normal: 0.3s;
+  --transition-slow: 0.5s;
+
+  /* Border Radius */
+  --border-radius-small: 8px;
+  --border-radius-medium: 12px;
+  --border-radius-large: 16px;
+  --border-radius-xl: 24px;
+  --border-radius-pill: 9999px;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  color: var(--text-primary);
+  background-color: var(--background-light);
+  margin: 0;
+  transition: all var(--transition-normal) ease;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Modern Card Styling */
+.card {
+  background: var(--surface-card);
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all var(--transition-normal) ease;
+  border: none !important;
+}
+
+.card:hover {
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Button Styling */
+.p-button {
+  border-radius: var(--border-radius-small);
+  transition: all var(--transition-fast) ease;
+  font-weight: 500;
+}
+
+.p-button.p-button-rounded {
+  border-radius: var(--border-radius-pill);
+}
+
+.p-button:not(.p-button-text):not(.p-button-link):hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.p-button.p-button-primary,
+.p-button.p-button-primary:enabled:hover {
+  background: var(--primary-blue);
+  border-color: var(--primary-blue);
+}
+
+.p-button.p-button-secondary,
+.p-button.p-button-secondary:enabled:hover {
+  background: var(--primary-orange);
+  border-color: var(--primary-orange);
+}
+
+/* Input Styling */
+.p-inputtext {
+  border-radius: var(--border-radius-small);
+  border: 1px solid var(--border-color);
+  transition: all var(--transition-fast) ease;
+  font-size: 1rem;
+}
+
+.p-inputtext:enabled:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 117, 255, 0.2);
+}
+
+.p-float-label input:focus ~ label,
+.p-float-label input.p-filled ~ label,
+.p-float-label textarea:focus ~ label,
+.p-float-label textarea.p-filled ~ label,
+.p-float-label .p-inputwrapper-focus ~ label,
+.p-float-label .p-inputwrapper-filled ~ label {
+  top: -0.75rem;
+  font-size: 12px;
+  color: var(--primary-blue);
+}
+
+/* Form Layout */
+.p-fluid .p-inputtext {
+  width: 100%;
+}
+
+.form-field {
+  margin-bottom: 1.5rem;
+}
+
+.form-field label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUpIn {
+  from { 
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn var(--transition-normal) ease-in-out;
+}
+
+.slide-up-in {
+  animation: slideUpIn var(--transition-normal) ease-out;
+}
+
+/* Toast Messages */
+.p-toast .p-toast-message {
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.p-toast .p-toast-message.p-toast-message-success {
+  background-color: var(--success-color);
+  border-left: none;
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-error {
+  background-color: var(--danger-color);
+  border-left: none;
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-info {
+  background-color: var(--info-color);
+  border-left: none;
+  color: white;
+}
+
+.p-toast .p-toast-message.p-toast-message-warning {
+  background-color: var(--warning-color);
+  border-left: none;
+  color: white;
+}
+
+/* Dropdown and Select Styling */
+.p-dropdown {
+  border-radius: var(--border-radius-small);
+}
+
+.p-dropdown:not(.p-disabled).p-focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 117, 255, 0.2);
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+  background-color: var(--light-blue);
+  color: var(--primary-blue);
+}
+
+/* Tables */
+.p-datatable .p-datatable-thead > tr > th {
+  background-color: var(--background-light);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+  font-weight: 600;
+}
+
+.p-datatable .p-datatable-tbody > tr {
+  transition: background-color var(--transition-fast) ease;
+}
+
+.p-datatable .p-datatable-tbody > tr:hover {
+  background-color: var(--light-blue);
+}
+
+/* Dialog */
+.p-dialog {
+  border-radius: var(--border-radius-large);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.p-dialog .p-dialog-header {
+  border-top-left-radius: var(--border-radius-large);
+  border-top-right-radius: var(--border-radius-large);
+}
+
+.p-dialog .p-dialog-content {
+  padding: 1.5rem;
+}
+
+/* Progress bar */
+.p-progressbar {
+  height: 6px;
+  border-radius: var(--border-radius-pill);
+}
+
+.p-progressbar.p-progressbar-indeterminate .p-progressbar-value::before {
+  background: linear-gradient(90deg, var(--primary-orange), var(--primary-blue));
+}
+
+/* Calendar */
+.p-calendar .p-inputtext {
+  border-radius: var(--border-radius-small);
+}
+
+.p-calendar .p-datepicker {
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* iOS-style Switch */
+.p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+  background: var(--primary-blue);
+}
+
+.p-inputswitch .p-inputswitch-slider {
+  border-radius: var(--border-radius-pill);
+}
+
+/* File Upload */
+.p-fileupload .p-button {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  border-radius: var(--border-radius-small);
+}
+
+/* Section Headers */
+.section-title {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
+/* Cards with hover effect */
+.interactive-card {
+  transition: all var(--transition-normal) ease;
+  cursor: pointer;
+}
+
+.interactive-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Scroll styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background-light);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #CCC;
+  border-radius: var(--border-radius-pill);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #AAA;
+}
+
+/* Layout */
+.layout-wrapper {
+  background-color: var(--background-light);
+}
+
+.layout-sidebar {
+  background-color: var(--surface-card);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.layout-topbar {
+  background-color: var(--surface-card);
+  box-shadow: 0 1px 10px rgba(0, 0, 0, 0.05);
+}

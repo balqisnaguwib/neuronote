@@ -1,4 +1,3 @@
-
 import { PersonalInfoComponent } from './personalinfo.component';
 import { PersonalInfoRoutingModule } from './personalinfo-routing.module';
 import { NgModule } from '@angular/core';
@@ -31,10 +30,11 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { TableModule } from 'primeng/table';
 import { FileUploadModule } from 'primeng/fileupload';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { ToastModule } from 'primeng/toast';
+import { DividerModule } from 'primeng/divider';
 
 @NgModule({
 	imports: [
-	
 		PersonalInfoRoutingModule,
 		CommonModule,
 		FormsModule,
@@ -64,7 +64,9 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 		InputGroupModule,
 		InputGroupAddonModule,
 		FileUploadModule,
-		ProgressSpinnerModule
+		ProgressSpinnerModule,
+		ToastModule,
+		DividerModule
 	],
 	declarations: [PersonalInfoComponent]
 })
