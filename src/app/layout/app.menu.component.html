@@ -1,0 +1,15 @@
+<ul class="layout-menu" style="display: flex; flex-direction: column; height: 100%; padding: 0; margin: 0; list-style-type: none;">
+    <!-- Logout button at the top 
+    <li style="margin-bottom: 5px; text-align: center;">
+        <button class="p-link layout-topbar-button" [routerLink]="''" (click)="authService.logout()" style="width: 100%; text-align: left; padding: 10px 20px; border: none; background: none; cursor: pointer;">
+            <i class="pi pi-sign-out"></i>
+            <span class="mr-2"> Log out</span>
+        </button>
+    </li>-->
+
+    <!-- Menu items -->
+    <ng-container *ngFor="let item of model; let i = index;">
+        <li app-menuitem *ngIf="!item.separator" [item]="item" [index]="i" [root]="true" style="padding: 10px;"></li>
+        <li *ngIf="item.separator" class="menu-separator" style="height: 1px; background: #ccc; margin: 10px 0;"></li>
+    </ng-container>
+</ul>

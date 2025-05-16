@@ -1,0 +1,73 @@
+
+<div
+    class="flex align-items-left justify-content-center min-h-screen min-w-screen overflow-hidden"
+    style="background-color: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);"
+>
+    <!-- <img
+        src="assets/layout/images/orange_white.svg"
+        alt="orange_white"
+        style="float: left"
+        class="mb-6 w-30rem flex-shrink-0"
+    /> -->
+
+    <div class="flex flex-column align-items-center justify-content-center">
+
+        <div
+            style="
+                border-radius: 65px;
+                padding: 0.3rem;
+                background: linear-gradient(
+                    180deg,
+                    rgb(65, 105, 225) 5%,
+                    rgba(245, 106, 39, 0.8) 30%
+                );
+            "
+        >
+            <div
+                class=" surface-card py-6 px-5 sm:px-5"
+                style="border-radius: 59px"
+            >
+            <img
+                src="assets/layout/images/NEURANOTE.png"
+                alt="background"
+                style="display: block; margin: 0 auto 0 auto; width: 50px; height: auto;"
+                class="mb-0 w-19rem flex-shrink-0"
+            />
+                <div>
+                    <div class="my-5">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-user"></i>
+                            <input type="text" id="userId" [(ngModel)]="userId" pInputText placeholder="Unifi login ID" class="w-full p-10 md:w-30rem" style="width: 100%;font-size: 16px;font-size: medium;" />
+                        </span>
+                    </div>
+
+                    <button
+                        [loading]="loadingLogin"
+                        pButton
+                        pRipple
+                        label="Login"
+                        icon="pi pi-angle-double-right"
+                        iconPos="right"
+                        style="padding: 0.5rem; width: 100px; font-size: 0.8rem; color: rgb(255, 255, 255); background-color: blue;font-size: medium;"
+                        (click)="login()"
+                    >
+                        <span
+                            style="
+                                margin: 0 auto;
+                                display: flex;
+                                align-items: center;
+                            "
+                        ></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <img
+        src="assets/layout/images/blue_white.svg"
+        alt="blue_white"
+        style="float: left"
+        class="mb-0 w-30rem flex-shrink-0"
+    /> -->
+</div>

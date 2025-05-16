@@ -1,0 +1,66 @@
+<div class="grid">
+    <div class="col-12">
+      <div class="card p-fluid">
+        <h2 class="text-xl font-bold mb-4">LAPORAN POLIS</h2>
+  
+        <!-- POLICE INFO -->
+        <div class="grid mb-3">
+          <div class="col-6">
+            <div>Balai Polis: <strong>Balai</strong></div>
+          </div>
+          <div class="col-6">
+            <div>Negeri: <strong>{{ personalInfo.negeri }}</strong></div>
+          </div>
+          <div class="col-6">
+            <div>Daerah: <strong>{{ personalInfo.daerah }}</strong></div>
+          </div>
+        </div>
+  
+        <!-- PENGADU INFO -->
+        <h3>BUTIR-BUTIR PENGADU</h3>
+        <div class="grid mb-3">
+          <div class="col-6"><p>Nama: <strong>{{ personalInfo.nama }}</strong></p></div>
+          <div class="col-6"><p>No Kad Pengenalan: <strong>{{ personalInfo.mykad }}</strong></p></div>
+          <div class="col-6"><p>Alamat: <strong>{{ personalInfo.alamat }}</strong></p></div>
+          <div class="col-6"><p>Telefon: <strong>{{ personalInfo.telefon }}</strong></p></div>
+          <div class="col-6"><p>Warganegara: <strong>{{ personalInfo.warganegara }}</strong></p></div>
+          <div class="col-6"><p>Jantina: <strong>{{ personalInfo.jantina }}</strong></p></div>
+          <div class="col-6"><p>Bangsa: <strong>{{ personalInfo.bangsa }}</strong></p></div>
+          <div class="col-6"><p>Agama: <strong>{{ personalInfo.agama }}</strong></p></div>
+        </div>
+  
+        <!-- TEXT AREA FOR REPORT -->
+        <h3>PENGADU MENGATAKAN:</h3>
+        <div class="col-12 mt-2 mb-3">
+            <p>
+                {{draftReport}}
+            </p>
+            <p-button label="Ubah suai" (click)="visible = true"></p-button>
+            <p-dialog header="Header" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" [style]="{ width: 'auto' }" [draggable]="false" [resizable]="false">
+                <span class="p-text-secondary block mb-8">Sila semak laporan polis dan ubah suai jika perlu.</span>
+                <textarea
+                        id="laporan"
+                        [(ngModel)]="draftReport"
+                        rows="15"
+                        class="w-full p-3 border border-gray-300 rounded"
+                        placeholder="Laporan anda..."
+                        style="white-space: pre-wrap"
+                    ></textarea>
+                <div class="flex justify gap-2">
+                    <p-button label="Batal" severity="secondary" (click)="visible = false" />
+                    <p-button label="Simpan" (click)="sendReport()" />
+                </div>
+            </p-dialog>
+            
+        </div>
+  
+        <!-- SUCCESS MESSAGE -->
+        <!-- <div *ngIf="showSuccess" class="p-message p-message-success mt-3">
+          <div class="p-message-wrapper">
+            <span class="p-message-text">Laporan berjaya dihantar dan telah disimpan.</span>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,34 @@
+<div class="grid">
+	<div class="col-12">
+	  <div class="card">
+		<h1>Form</h1>
+		<div class="col-12 md:col-12">
+		  <div class="card p-fluid">
+			<div class="grid formgrid">
+			  <!-- Name -->
+			  <div class="field col-12 md:col-6">
+				<label for="name">Name</label>
+				<input id="name" type="text" required pInputText [(ngModel)]="name" />
+			  </div>
+
+			  
+			  <!-- Email -->
+			  <div class="field col-12 md:col-6">
+				<label for="email">Email</label>
+				<input id="email" type="email" required pInputText [(ngModel)]="email" />
+			  </div>
+			</div>
+  
+			<div class="mt-4">
+			  <button
+				pButton
+				label="Hantar"
+				class="p-button-primary"
+			  ></button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  

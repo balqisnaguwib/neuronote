@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+
+
+<div class="grid">
+
+
+	
+
+	
+	<div class="col-12 xl:col-10">
+		<div class="card">
+			<p-orderList [value]="listPR" header="LOR ID" [dragdrop]="true" [listStyle]="{'height':'250px'}">
+				<ng-template let-pr pTemplate="item">
+					<div class="pr-item">
+						<input type="radio" [value]="pr" [(ngModel)]="selectedPr" name="prRadio" />
+						{{pr.lor_id}}
+					</div>
+				</ng-template>
+			</p-orderList>
+		</div>
+
+		
+	</div>
+
+	<div class="col-10">
+		<div class="card">
+			<div class="row">
+				<!-- Column 1 -->
+				<div class="col-md-6">
+					<div class="card-body">
+						 <h3 class="card-title">Project Description :<strong>{{selectedPr?.project_description}}</strong></h3> 
+						 <h3 class="card-title">LOR ID:<strong>{{selectedPr?.lor_id}}</strong></h3>
+						 <h3 class="card-title">PAC Status: <strong>{{selectedPr?.pac_status}}</strong></h3>
+						 <h3 class="card-title">TP Status: <strong>{{selectedPr?.accept_status}}</strong></h3>
+						<h3 class="card-title">Contract No: <strong>{{selectedPr?.contract_no}}</strong></h3>
+					</div>
+				</div>
+	
+				<!-- Column 2 -->
+				
+			</div>
+	
+			<div class="row">
+				<!-- Column 3 -->
+				
+	
+				<!-- Column 4 -->
+				<div class="col-md-6">
+					<div class="card-body">
+						
+						<div class="col-12 xl:col-10">
+							<div class="card">
+								<div class="card-body">
+								
+									<!-- Add additional info content here -->
+								</div>
+								<div class="custom-label">
+									<strong>File Name:</strong> Tech Proposal 
+									<!-- Download icon -->
+									<a href="your-download-url" download="your-file-name">
+										<i class="fas fa-download"></i>
+									</a>
+								</div><br>
+
+								<p-orderList [value]="orderCities2" [dragdrop]="true" [listStyle]="{'height':'250px'}">
+									
+						
+									<ng-template let-city pTemplate="item">
+										<div class="city-item">
+											<input type="radio" [value]="city" [(ngModel)]="selectedCity" name="cityRadio1" />
+											{{city.name}}
+											<a [href]="city.fileUrl" download="{{ generateDownloadFileName(city) }}">
+												<i class="fas fa-download"></i>
+											</a>
+										</div>
+									</ng-template>
+								</p-orderList>
+						
+								<!-- Additional Label after the p-orderList -->
+								<br><br>
+								<div class="custom-label"><strong>File Name:</strong> Tech Proposal 2 <a href="your-download-url" download="your-file-name">
+									<i class="fas fa-download"></i>
+								</a></div><br>
+								<div class="custom-label"><strong>File Name:</strong> Draft PR <a href="your-download-url" download="your-file-name">
+									<i class="fas fa-download"></i>
+								</a></div><br>
+							
+							</div>
+						</div>
+					</div>
+
+
+
+
+				<div>
+					<button pButton label="Proceed" class="p-button-warning" icon="pi pi-arrow-right" (click)="proceed()"></button>
+					<button pButton label="Return" class="p-button-info" icon="pi pi-arrow-left" (click)="returnAction()"></button>
+				  </div>
+				  
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,19 @@
+<div class="layout-topbar">
+    <!-- <img src="assets/layout/images/logo.png" alt="background" style="max-width: 100%; height: auto;" class="mb-0 w-1rem flex-shrink-0" /> -->
+    <img src="assets/layout/images/NEURANOTE.png" alt="background" style="max-width: 100%; height: auto;" class="mb-0 w-3rem flex-shrink-0" />
+    <button #menubutton class="p-link layout-menu-button layout-topbar-button" *ngIf="showSidebarIcon" (click)="layoutService.onMenuToggle()">
+        <i class="pi pi-bars" ></i>
+    </button>
+
+    <!-- <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button" (click)="layoutService.showProfileSidebar()">
+        <i class="pi pi-ellipsis-v"></i>
+    </button>
+
+    <div #topbarmenu class="layout-topbar-menu" [ngClass]="{'layout-topbar-menu-mobile-active': layoutService.state.profileSidebarVisible}">
+        <button class="p-link layout-topbar-button" [routerLink]="''" (click)="authService.logout()">
+            <i class="pi pi-sign-out"></i>
+            <span>Log out</span>
+        </button>
+       
+    </div> -->
+</div>

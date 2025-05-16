@@ -1,0 +1,73 @@
+/* custom-table.component.css */
+
+.custom-card {
+    margin: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+  }
+  
+  .custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .custom-table th, .custom-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .table-title {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.5rem;
+  }
+  
+  .vertical-header {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap
+  }  
+
+  /* custom-table.component.css */
+
+.custom-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .custom-table th, .custom-table td {
+    border: 1px solid #0f54d3;
+    padding: 12px;
+    text-align: left;
+  }
+  
+  .header-row {
+    background-color: #4CAF50; /* Green color for the header row */
+    color: white;
+  }
+  
+  .odd-row {
+    background-color: #dce6f4; /* Light gray color for odd rows */
+  }
+  
+  .table-title {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.5rem;
+  }
+
+  /* Add this CSS to your component's style file or global styles */
+div button {
+  margin-right: 8px; /* Adjust the value based on your preferred gap */
+}
+
+  /* Add this to your styles.css or styles.scss file */
+.disabled-button {
+  background-color: #cccccc; /* Change this to the color you desire for the disabled state */
+  color: #666666; /* Change this to the text color you desire for the disabled state */
+  cursor: not-allowed; /* Change this to the cursor style you desire for the disabled state */
+}

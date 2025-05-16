@@ -1,0 +1,178 @@
+<div class="grid">
+	<div class="col-12">
+	  <div class="card">
+		<h1>MAKLUMAT PERIBADI</h1>
+		<div class="col-12 md:col-12">
+			<div class="card p-fluid">
+				<div class="field col-12">
+				<!-- Image Upload -->
+				<div class="p-field">
+					<p class="h2">Untuk memulakan, sila muat naik gambar MyKad anda: </p>
+					<p-fileUpload #fu mode="basic" chooseLabel="Pilih" uploadLabel="Muat Naik" cancelLabel="Batal" chooseIcon="pi pi-upload" 
+					  accept="image/*" (uploadHandler)="customUpload($event)" [customUpload]="true"
+					  (onSelect)="onFileSelect($event)"
+					>
+					</p-fileUpload>
+					<p-progressSpinner ariaLabel="loading" *ngIf="loadingState"></p-progressSpinner>
+					<div *ngIf="selectedFileName" class="mt-2">
+						<p><strong>Imej dipilih:</strong> {{ selectedFileName }}</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		  <div class="card p-fluid" *ngIf="uploadedFile && personalInfo.nama != ''">
+			<h3 class="text-xl mb-4"><i>Sila sahkan dan lengkapkan semua maklumat</i></h3>
+			<div class="grid formgrid">
+			  <!-- Name -->
+			  <div class="field col-12 md:col-6">
+				<label for="nama">Nama Penuh</label>
+				<input id="nama" type="text" class="form-control" required pInputText [(ngModel)]="personalInfo.nama" />
+			  </div>
+
+			  <div class="field col-12 md:col-6">
+				<label for="mykad">No. Kad Pengenalan (IC)​</label>
+				<input id="mykad" type="text" class="form-control" pattern="^\d{6}-\d{2}-\d{4}$" required pInputText [(ngModel)]="personalInfo.mykad" #icModel="ngModel" />
+				<small *ngIf="icModel.invalid && icModel.touched" class="p-error">
+					Sila isi no. kad pengenalan yang sah dengan "-".
+				</small>
+			  </div>
+  
+			  <!-- Date of Birth -->
+			  <div class="field col-12 md:col-6">
+				<label for="tarikhLahir">Tarikh Lahir</label>
+				<p-calendar
+				  id="tarikhLahir"
+				  [(ngModel)]="personalInfo.tarikhLahir"
+				  dateFormat="yy-mm-dd"
+				  [showIcon]="true"
+				  required
+				></p-calendar>
+			  </div>
+  
+			  <!-- Gender -->
+			  <div class="field col-12 md:col-6">
+				<label for="jantina">Jantina</label>
+				<p-dropdown
+				  id="jantina"
+				  [options]="genderOptions"
+				  [(ngModel)]="personalInfo.jantina"
+				  placeholder="Pilih Jantina"
+				></p-dropdown>
+			  </div>
+  
+			  <!-- Nationality -->
+			  <div class="field col-12 md:col-6">
+				<label for="warganegara">Warganegara</label>
+				<input
+				  id="warganegara"
+				  type="text"
+				  pInputText
+				  required
+				  [(ngModel)]="personalInfo.warganegara"
+				/>
+			  </div>
+  
+			  <!-- Race -->
+			  <div class="field col-12 md:col-6">
+				<label for="bangsa">Bangsa</label>
+				<input id="bangsa" type="text" required pInputText [(ngModel)]="personalInfo.bangsa" />
+			  </div>
+  
+			  <!-- Religion -->
+			  <div class="field col-12 md:col-6">
+				<label for="agama">Agama</label>
+				<input
+				  id="agama"
+				  type="text"
+				  pInputText
+				  required
+				  [(ngModel)]="personalInfo.agama"
+				/>
+			  </div>
+  
+			  <!-- Handphone Number -->
+			  <div class="field col-12 md:col-6">
+				<label for="telefon">Nombor Telefon</label>
+				<input
+				  id="telefon"
+				  type="text"
+				  pInputText
+				  required
+				  [(ngModel)]="personalInfo.telefon"
+				  pattern="^(01[0-9])-?\d{7,8}$"
+				  #phoneModel="ngModel"
+				/>
+				  <small *ngIf="phoneModel.invalid && phoneModel.touched" class="p-error">
+					Sila masukkan nombor telefon Malaysia yang sah dalam format 01X-XXXXXXX.
+				  </small>
+			  </div>
+  
+			  <!-- Address -->
+			  <div class="field col-12">
+				<label for="alamat">Alamat</label>
+				<textarea
+				  id="alamat"
+				  pInputTextarea
+				  rows="3"
+				  required
+				  [(ngModel)]="personalInfo.alamat"
+				></textarea>
+			  </div>
+  
+			  <!-- Postcode -->
+			  <div class="field col-12 md:col-4">
+				<label for="poskod">Poskod</label>
+				<input
+				  id="poskod"
+				  type="text"
+				  pInputText
+				  required
+				  [(ngModel)]="personalInfo.poskod"
+				/>
+			  </div>
+  
+			  <!-- State -->
+			  <div class="field col-12 md:col-4">
+				<label for="state">Negeri</label>
+				<p-dropdown
+				  id="negeri"
+				  [options]="stateOptions"
+				  [(ngModel)]="personalInfo.negeri"
+				  placeholder="Negeri"
+				></p-dropdown>
+			  </div>
+  
+			  <!-- District -->
+			  <div class="field col-12 md:col-4">
+				<label for="daerah">Daerah</label>
+				<input
+				  id="daerah"
+				  type="text"
+				  pInputText
+				  required
+				  [(ngModel)]="personalInfo.daerah"
+				/>
+			  </div>
+  
+			  <!-- Email -->
+			  <div class="field col-12 md:col-6">
+				<label for="emel">Emel</label>
+				<input id="emel" type="email" required pInputText [(ngModel)]="personalInfo.emel" />
+			  </div>
+			</div>
+  
+			<div class="mt-4">
+			  <button
+			    id="submitInfo"
+				pButton
+				label="Hantar"
+				class="p-button-primary"
+				(click)="submitPersonalInfo()"
+			  ></button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	</div>
+  </div>
+  

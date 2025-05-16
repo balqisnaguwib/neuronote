@@ -1,0 +1,148 @@
+<!-- custom-table.component.html -->
+
+<!-- custom-table.component.html -->
+<mat-card class="custom-card">
+    <mat-card-content>
+        <!-- <h2 class="table-title">Table 2</h2> -->
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th
+                        *ngFor="let header of headers2"
+                        [attr.rowspan]="header.rowspan"
+                        [class.vertical-header]="header.isVertical"
+                    >
+                        {{ header.label }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Auto fromDB -->
+                <tr *ngFor="let row of verify">
+                    <ng-template [ngIf]="row.type == 'manual'">
+                        <td style="color: red">{{ row.criteria }}</td>
+                        <div
+                            *ngIf="
+                                row.data ?? false;
+                                then thenBlock;
+                                else elseBlock
+                            "
+                        ></div>
+                        <ng-template #thenBlock>
+                            <td>{{ row.data }}</td>
+                            <td>
+                                <p-dropdown
+                                    [options]="['yes','no']"
+                                    [(ngModel)]="row.status"
+        
+                                    placeholder="Please Choose"
+                                ></p-dropdown></td>
+                                </ng-template
+                        >
+                        <ng-template #elseBlock>
+                            <div
+                                *ngIf="
+                                    row.options ?? false;
+                                    then optionblock;
+                                    else textblock
+                                "
+                            ></div>
+                            <ng-template #optionblock>
+                                <td>
+                                    <p-dropdown
+                                        [options]="row.options"
+                                        [(ngModel)]="row.status"
+                                        optionLabel="description"
+                                        optionValue="value"
+                                        placeholder="Please Choose"
+                                    ></p-dropdown>
+                                </td>
+                                <td>{{ row.status }}</td></ng-template>
+                            </ng-template>
+
+                            <ng-template #textblock>
+                                
+                                <td><input type="text" pInputText [(ngModel)]="value" /> </td>
+
+
+                                <td>
+                                    <p-dropdown
+                                        [options]="['yes','no']"
+                                        [(ngModel)]="row.status"    
+            
+                                        placeholder="Please Choose"
+                                    ></p-dropdown></td>
+                            
+                            
+                            
+                            
+                            
+                            </ng-template>
+                        </ng-template>
+
+                        
+                    
+
+                    <ng-template [ngIf]="row.type == 'auto'">
+                        <td>{{ row.criteria }}</td>
+                        <td>{{ row.data }}</td>
+                        <td>{{ row.status }}</td></ng-template
+                    >
+                    <!--                    
+                    <td>{{ row.criteria }}</td>
+                    <td>{{ row.data}}</td>
+                    <td>{{ row.status }}</td> -->
+                </tr>
+            </tbody>
+        </table>
+    </mat-card-content>
+</mat-card>
+
+<div class="grid formgrid">
+    <div class="col-12 md:col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="field-checkbox">
+                    <p-checkbox
+                        name="group1"
+                        value="New York"
+                        [(ngModel)]="valCheck"
+                        id="ny"
+                    ></p-checkbox>
+                    <label for="ny"
+                        >I hereby verify that this data has been
+                        validated</label
+                    >
+                </div>
+                <br />
+                <div>
+                    <button
+                        pButton
+                        label="Verify to create PR"
+                        class="p-button-warning"
+                        icon="pi pi-arrow-right"
+                        (click)="submit()"
+                        [disabled]="!valCheck"
+                        [style]="{
+                            'background-color': !valCheck ? '#cccccc' : ''
+                        }"
+                    ></button>
+                    <button
+                        pButton
+                        label="Save"
+                        class="p-button-info"
+                        icon="pi pi-save"
+                        (click)="save()"
+                    ></button>
+                </div>
+            </div>
+
+            <!-- Add more columns or content within the grid if needed -->
+        </div>
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <!-- Additional content or buttons can be added here -->
+        </div>
+        <br />
+    </div>
+</div>

@@ -1,0 +1,74 @@
+<div class="card">
+	<div class="card-body">
+	  <p-table
+		#dt1
+		[value]="chatBots"
+		dataKey="id"
+		[rows]="10"
+		[rowHover]="true"
+		styleClass="p-datatable-gridlines table table-striped table-bordered"
+		[paginator]="true"
+		[globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+		responsiveLayout="scroll"
+	  >
+		<ng-template pTemplate="header">
+		  <tr>
+			<th>
+			  <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+			</th>
+			<th>
+			  <div><input pInputText placeholder="Filter Project No" (input)="dt1.filter($event.target.value, 'chatbot_name', 'contains')" /><br><br>
+				Project No
+				
+			  </div>
+			</th>
+			<th>
+			  <div><input pInputText placeholder="Filter Request Date" (input)="dt1.filter($event.target.value, 'chatbot_created_dt', 'contains')" /><br><br>
+				Request Date
+				
+			  </div>
+			</th>
+			<th>
+			  <div><input pInputText placeholder="Filter State" (input)="dt1.filter($event.target.value, 'chatbot_created_by', 'contains')" /><br><br>
+				State
+				
+			  </div>
+			</th>
+			<th>
+			  <div><input pInputText placeholder="Filter Program" (input)="dt1.filter($event.target.value, 'chatbot_name2', 'contains')" /><br><br>
+				Program
+				
+			  </div>
+			</th>
+		  </tr>
+		</ng-template>
+  
+		<ng-template pTemplate="body" let-chatbots>
+		  <tr>
+			<td>
+			  <p-tableCheckbox [value]="chatbots"></p-tableCheckbox>
+			</td>
+			<td>
+			  <a routerLink="/uikit/file">{{ chatbots.chatbot_name }}</a>
+			</td>
+			<td>
+			  {{ chatbots.chatbot_created_dt }}
+			</td>
+			<td>
+			  {{ chatbots.chatbot_created_by }}
+			</td>
+			<td>
+			  {{ chatbots.chatbot_name2 }}
+			</td>
+		  </tr>
+		</ng-template>
+	  </p-table>
+	  <div class="flex justify-content-between flex-column sm:flex-row">
+		<button pButton label="Generate Report" class="p-button-info" (click)="generateRawReport()"></button>
+	  </div>
+	  <div class="flex justify-content-between flex-column sm:flex-row">
+		<!-- Additional content or buttons can be added here -->
+	  </div>
+	</div>
+  </div>
+  

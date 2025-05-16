@@ -1,0 +1,117 @@
+  .message {
+    display: flex; /* Make message items flex containers */
+  }
+
+  .avatar-column {
+    flex: 0 0 auto; /* Avatar column does not grow or shrink */
+  }
+
+  .message-column {
+    flex: 1; /* Message column takes remaining space */
+    padding-left: 10px; /* Adjust padding as needed */
+  }
+
+  .avatar {
+    width: 24px; /* Adjust width as needed */
+    height: 24px; /* Adjust height as needed */
+    border-radius: 50%;
+    margin-right: 8px; /* Adjust margin as needed */
+    margin-bottom: -4px; /* Adjust margin as needed */
+  }
+
+  /* Hide avatars by default */
+  .avatar {
+    display: none;
+  }
+
+  /* Show avatars for user and system messages */
+  .message.user .avatar,
+  .message.system .avatar {
+    display: block;
+  }
+
+  /* Add these styles to retain your existing styling */
+  .custom-chat-container {
+    display: flex;
+    flex-direction: column;
+    max-height: 70vh;
+    border: none;
+    flex-direction: column-reverse;
+  }
+
+  .messages-container {
+      flex-grow: 1;
+      overflow-y: scroll;
+      padding: 10px;
+      border: none;
+      flex-direction: column-reverse;
+  }
+
+  .message {
+    padding: 8px;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    border: none;
+  }
+
+  .user {
+    background-color: #2a5cb9;
+    color: white;
+    border: none;
+    float: right;
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.system {
+    background-color: #e5e5e5;
+    color: rgb(32, 32, 32);
+    border: none;
+    float: left;
+    width: 90%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+  .input-container {
+    display: flex;
+    padding: 10px;
+    border-color: none;
+    border: none;
+    position: fixed;
+    bottom: 0;
+    width: 90%;
+
+  }
+
+  .input-container input {
+    flex-grow: 1;
+    margin-right: 10px;
+    border: 1px solid transparent; /* Set default border to transparent */
+    border-radius: 5px; /* Set border radius */
+    padding-left: 30px; /* Adjust padding as needed */
+  }
+
+  .input-container input:focus {
+    border-color: #FF7A00; /* Change border color when input is focused */
+    outline: none; /* Remove default focus outline */
+  }
+
+  .input-container button {
+    background-color: #180092;
+    color: white;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    border-color: none;
+    cursor: pointer;
+  } 
+
+  .card.light-effect {
+    box-shadow: 0 4px 8px rgba(100, 78, 0, 0.1); /* Add a light box-shadow */
+    border-radius: 8px; /* Optional: Add border-radius for rounded corners */
+    padding: 20px; /* Optional: Add padding for spacing */
+  }

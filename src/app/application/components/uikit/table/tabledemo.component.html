@@ -1,0 +1,117 @@
+<div class="card">
+    <div class="card-body">
+        <!-- <h5 class="card-title">Existing PO List</h5> -->
+
+        <p-table
+            #dt1
+            [value]="boq"
+            dataKey="id"
+            [rows]="10"
+            [rowHover]="true"
+            styleClass="p-datatable-gridlines"
+            [paginator]="true"
+            [globalFilterFields]="['name', 'country.name', 'representative.name', 'status']"
+            responsiveLayout="scroll"
+            selectionMode="multiple"
+            [(selection)]="selectedBoq"
+            (onRowSelect)="onRowSelect($event)"
+            (onRowUnselect)="onRowUnselect($event)"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>Contract No</th>
+                    <th>PU ID</th>
+                    <th>PU Description</th>
+					<th>Night Rate</th>
+                    <th>Location Factor</th>
+                    <th>Cost Per Unit</th>
+                    <th>Quantity</th>
+                    <th>RM</th>
+                    
+                </tr>
+            </ng-template>
+
+			<ng-template pTemplate="body" let-pr>
+				<tr>
+
+					<td>
+                        <p-tableCheckbox [value]="chatbots"></p-tableCheckbox>
+                    </td>
+					<td>{{ pr.contractno }}</td>	<!-- contract no -->
+					
+
+                    <td pEditableColumn> 	<!-- pu id -->
+						<p-cellEditor>
+							<ng-template pTemplate="input">
+								
+								<input [(ngModel)]="pr.chatbot_quality" />
+							</ng-template>
+							<ng-template pTemplate="output">
+								{{ pr.pu_id }}
+							</ng-template>
+
+						</p-cellEditor>
+					</td>
+
+
+					<td>{{ pr.pu_description }}</td>
+					<td>{{ pr.night_rate }}</td>
+                    <td>{{ pr.location_factor }}</td>
+                    <td>{{ pr.cost_per_unit }}</td>
+
+					<td pEditableColumn>
+						<p-cellEditor>
+							<ng-template pTemplate="input">
+								<!-- Input field for editing -->
+								<input [(ngModel)]="pr.quantity" />
+							</ng-template>
+							<ng-template pTemplate="output">
+								<!-- Display value when not in edit mode -->
+								{{ pr.quantity }}
+							</ng-template>
+
+						</p-cellEditor>
+					</td>
+					<td>{{ pr.total_cost }}</td>
+					
+					
+					
+				</tr>
+			</ng-template>
+        </p-table>
+
+		<H4 ><td><strong>TOTAL : RM</strong> {{ totalRm }}</td></H4>
+<br>
+       
+<div class="grid formgrid">
+    <div class="col-12 md:col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="field-checkbox">
+                    <p-checkbox name="group1" value="New York" [(ngModel)]="valCheck" id="ny"></p-checkbox>
+                    <label for="ny">I hereby verify that this data has been validated</label>
+                </div><br>
+                <div>
+                    <button pButton label="Verify and submit PR Request" class="p-button-warning" icon="pi pi-arrow-right"
+                        (click)="submit()" [disabled]="!valCheck"></button>
+                    <button pButton label="Save" class="p-button-info" icon="pi pi-save" (click)="return()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add more columns or content within the grid if needed -->
+</div>
+
+
+        <div class="flex justify-content-between flex-column sm:flex-row">
+            <!-- Additional content or buttons can be added here -->
+        </div>
+<br>
+       
+    </div>
+
+    
+</div>

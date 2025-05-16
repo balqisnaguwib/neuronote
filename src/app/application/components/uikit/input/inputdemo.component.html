@@ -1,0 +1,198 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <h1>REQUEST DETAIL ATA</h1>
+            <div class="col-12 md:col-12">
+                <div class="card p-fluid">
+                    <div class="flex justify-content-center flex-column">
+                        <h3>CTT Number</h3>
+
+                        <p-autoComplete
+                            [(ngModel)]="selectedProject"
+                            [suggestions]="filteredProjects"
+                            (completeMethod)="filterProject($event)"
+                            field="project_no"
+                            [dropdown]="true"
+                        >
+                        </p-autoComplete>
+
+                        <br />
+                        <button
+                            pButton
+                            label="Search"
+                            class="p-button-primary"
+                            (click)="searchChat()"
+                        ></button>
+                    </div>
+                    <br />
+                    <br />
+
+                    <div class="card">
+                        <div class="card-body">
+                            <p-table
+                                #dt1
+                                [value]="chatBots"
+                                dataKey="id"
+                                [rows]="10"
+                                [rowHover]="true"
+                                styleClass="p-datatable-gridlines table table-striped table-bordered"
+                                [paginator]="true"
+                                [globalFilterFields]="[
+                                    'name',
+                                    'country.name',
+                                    'representative.name',
+                                    'status'
+                                ]"
+                                responsiveLayout="scroll"
+                            >
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>User ID</th>
+
+                                        <th>Password</th>
+                                        <!-- <th>Date Password Update</th> -->
+
+                                        <th>Action</th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-chatbots>
+                                    <tr>
+                                        <td>{{ chatbots.chatbot_name }}</td>
+
+                                        <td>
+                                            {{ chatbots.chatbot_created_by }}
+                                        </td>
+
+                                        <td>
+                                            <tr>
+                                                <td>
+                                                    <button
+                                                        (click)="
+                                                            confirm2(
+                                                                $event,
+                                                                chatbots
+                                                            )
+                                                        "
+                                                        pButton
+                                                        pRipple
+                                                        type="button"
+                                                        icon="pi pi-replay"
+                                                        pTooltip="Click to Reset Password"
+                                                        class="p-button-rounded p-button-danger p-button-text"
+                                                    ></button>
+
+                                                    <p-confirmPopup
+                                                        key="confirm2"
+                                                    ></p-confirmPopup>
+                                                </td>
+                                            </tr>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                            <div class="grid">
+                                <div class="col-12">
+                                    <p-dialog
+                                        [(visible)]="productDialog"
+                                        [style]="{ width: '450px' }"
+                                        header="New Password"
+                                        [modal]="true"
+                                        class="p-fluid"
+                                    >
+                                        <ng-template pTemplate="content">
+                                            <div class="field">
+                                                <label for="name">Name</label>
+                                                <input
+                                                    type="text"
+                                                    pInputText
+                                                    id="name"
+                                                    [(ngModel)]="chat.name"
+                                                    required
+                                                    autofocus
+                                                    [ngClass]="{
+                                                        'ng-invalid ng-dirty':
+                                                            submitted &&
+                                                            !chat.name
+                                                    }"
+                                                />
+                                                <small
+                                                    class="ng-dirty ng-invalid"
+                                                    *ngIf="
+                                                        submitted && !chat.name
+                                                    "
+                                                    >Chat Name is
+                                                    required.</small
+                                                >
+                                            </div>
+
+                                            <div class="field">
+                                                <label for="name"
+                                                    >OpenAI Key</label
+                                                >
+                                                <input
+                                                    type="text"
+                                                    pInputText
+                                                    id="key"
+                                                    [(ngModel)]="chat.key"
+                                                    required
+                                                    autofocus
+                                                    [ngClass]="{
+                                                        'ng-invalid ng-dirty':
+                                                            submitted &&
+                                                            !chat.key
+                                                    }"
+                                                />
+                                                <small
+                                                    class="ng-dirty ng-invalid"
+                                                    *ngIf="
+                                                        submitted && !chat.key
+                                                    "
+                                                    >Open AI Key is
+                                                    required.</small
+                                                >
+                                            </div>
+                                        </ng-template>
+
+                                        <ng-template pTemplate="footer">
+                                            <p-button
+                                                label="Cancel"
+                                                [text]="true"
+                                                icon="pi pi-times"
+                                                severity="secondary"
+                                                (click)="hideDialog()"
+                                            ></p-button>
+                                            <button
+                                                pButton
+                                                pRipple
+                                                label="Save"
+                                                icon="pi pi-check"
+                                                class="p-button-succefull"
+                                                (click)="saveChat()"
+                                            ></button>
+                                        </ng-template>
+                                    </p-dialog>
+                                </div>
+
+                                <p-toast></p-toast>
+                                <div
+                                    class="flex justify-content-between flex-column sm:flex-row"
+                                >
+                                    <!-- Additional content or buttons can be added here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex justify-content-between flex-column sm:flex-row"
+                        ></div>
+                        <br />
+                        <div
+                            class="flex justify-content-between flex-column sm:flex-row"
+                        ></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
