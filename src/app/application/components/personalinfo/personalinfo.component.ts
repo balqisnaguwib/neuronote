@@ -82,6 +82,18 @@ export class PersonalInfoComponent implements OnInit {
     uploadedFile: any;
     loadingState: boolean = false;
     
+    // Progress tracking variables
+    progressValue: number = 0;
+    progressStages: string[] = [
+      'Memulakan muat naik...', 
+      'Memproses imej...', 
+      'Mengekstrak teks...', 
+      'Menganalisa maklumat...',
+      'Memuatkan data...'
+    ];
+    currentStage: number = 0;
+    progressInterval: any;
+    
     constructor(
         private router: Router, 
         private server: ServerService, 
@@ -103,16 +115,66 @@ export class PersonalInfoComponent implements OnInit {
         }
     }
 
+    // Reset progress state
+    resetProgress() {
+        this.progressValue = 0;
+        this.currentStage = 0;
+        if (this.progressInterval) {
+            clearInterval(this.progressInterval);
+            this.progressInterval = null;
+        }
+    }
+
+    // Start the progress simulation
+    startProgressSimulation() {
+        this.resetProgress();
+        
+        // Set initial progress to make the progress bar visible immediately
+        this.progressValue = 1;
+        
+        // We'll simulate progress by updating every 180ms for a smooth effect
+        this.progressInterval = setInterval(() => {
+            // Increment progress based on current stage
+            if (this.currentStage < this.progressStages.length - 1) {
+                // Each stage goes from 0 to 20% (5 stages total = 100%)
+                const stageProgress = (this.progressValue % 20) + 1; // Increment by 1% each time
+                
+                if (stageProgress >= 20) {
+                    // Move to next stage
+                    this.currentStage++;
+                    this.progressValue = this.currentStage * 20;
+                } else {
+                    this.progressValue = (this.currentStage * 20) + stageProgress;
+                }
+            } else {
+                // Final stage - complete it more slowly
+                if (this.progressValue < 99) {
+                    this.progressValue += 1;
+                    if (this.progressValue > 99) this.progressValue = 99;
+                }
+            }
+        }, 180);
+    }
+
+    // Function to get the current progress stage text
+    getCurrentStageText(): string {
+        return this.progressStages[this.currentStage];
+    }
+
     async customUpload(event: any) {
         this.loadingState = true;
-        this.uploadedFile = event.files[0].name;
+        this.uploadedFile = null; // Reset to show progress
         console.log('File upload event:', event);
         const file = event.files[0];
+        
         if (file) {
             const formData = new FormData();
             formData.append('file', file);
 
             try {
+                // Start progress tracking
+                this.startProgressSimulation();
+                
                 const response = await fetch('https://llm.nnoc.cloud:8842/neuranotelima/character_recognition/', {
                     method: 'POST',
                     headers: {
@@ -120,6 +182,10 @@ export class PersonalInfoComponent implements OnInit {
                     },
                     body: formData
                 });
+                
+                // Stop progress simulation
+                clearInterval(this.progressInterval);
+                this.progressValue = 100; // Set to 100% when done
                 
                 if (response.ok) {
                     let res = await response.json();
@@ -140,6 +206,12 @@ export class PersonalInfoComponent implements OnInit {
                         this.personalInfo.tarikhLahir.setFullYear(this.personalInfo.tarikhLahir.getFullYear() - 100);
                     }
                     
+                    // After a short delay to show 100% completion, set uploadedFile to true
+                    setTimeout(() => {
+                        this.uploadedFile = true;
+                        this.loadingState = false;
+                    }, 500);
+                    
                     console.log('Extracted Info:', this.personalInfo);
                     this.messageService.add({ 
                         severity: 'success', 
@@ -148,6 +220,7 @@ export class PersonalInfoComponent implements OnInit {
                         life: 3000
                     });
                 } else {
+                    this.loadingState = false;
                     this.messageService.add({ 
                         severity: 'error', 
                         summary: 'Ralat', 
@@ -156,6 +229,11 @@ export class PersonalInfoComponent implements OnInit {
                     });
                 }
             } catch (error) {
+                // Reset progress on error
+                clearInterval(this.progressInterval);
+                this.progressValue = 0;
+                this.loadingState = false;
+                
                 console.error('Error uploading MyKad:', error);
                 this.messageService.add({ 
                     severity: 'error', 
@@ -163,17 +241,15 @@ export class PersonalInfoComponent implements OnInit {
                     detail: 'Masalah sambungan ke pelayan. Sila cuba lagi.',
                     life: 3000
                 });
-            } finally {
-                this.loadingState = false;
             }
         } else {
+            this.loadingState = false;
             this.messageService.add({ 
                 severity: 'warn', 
                 summary: 'Amaran', 
                 detail: 'Sila pilih satu gambar',
                 life: 3000
             });
-            this.loadingState = false;
             return;
         }
     }

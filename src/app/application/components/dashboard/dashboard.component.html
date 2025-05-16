@@ -103,7 +103,8 @@
       <p-button 
         label="Hantar Laporan" 
         icon="pi pi-send" 
-        (click)="sendReport()" 
+        (click)="confirmSendReport()" 
+        [disabled]="reportSent"
         styleClass="p-button-raised submit-button">
       </p-button>
     </div>
@@ -148,6 +149,41 @@
       label="Simpan" 
       icon="pi pi-check"
       (click)="updateReport()" />
+  </div>
+</p-dialog>
+
+<!-- Confirmation Dialog -->
+<p-dialog 
+  header="Pengesahan Penghantaran" 
+  [(visible)]="confirmVisible" 
+  [modal]="true" 
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" 
+  [style]="{ width: '500px' }" 
+  [draggable]="false" 
+  [resizable]="false"
+  styleClass="report-dialog">
+  
+  <div class="dialog-content">
+    <div class="flex align-items-center justify-content-center mb-4">
+      <i class="pi pi-exclamation-triangle mr-2" style="font-size: 2rem; color: var(--warning-color);"></i>
+      <span class="font-bold text-lg">Adakah anda pasti untuk menghantar laporan ini?</span>
+    </div>
+    <p class="text-center mb-0">Setelah dihantar, laporan tidak boleh diubah lagi.</p>
+  </div>
+    
+  <div class="dialog-footer">
+    <p-button 
+      label="Batal" 
+      icon="pi pi-times"
+      severity="secondary" 
+      (click)="confirmVisible = false" 
+      styleClass="p-button-text" />
+      
+    <p-button 
+      label="Ya, Hantar" 
+      icon="pi pi-check"
+      severity="warning"
+      (click)="processReport()" />
   </div>
 </p-dialog>
 

@@ -26,12 +26,20 @@
 			</p-fileUpload>
 		  </div>
 		  
-		  <div class="upload-info" *ngIf="selectedFileName && !uploadedFile">
+		  <div class="upload-info" *ngIf="selectedFileName && !uploadedFile && !loadingState">
 			<div class="file-info">
 			  <i class="pi pi-image"></i>
 			  <span>{{ selectedFileName }}</span>
 			</div>
-			<p-progressSpinner *ngIf="loadingState" styleClass="custom-spinner"></p-progressSpinner>
+		  </div>
+		  
+		  <!-- Progress Bar Display -->
+		  <div class="progress-container" *ngIf="loadingState && progressValue > 0">
+		    <div class="progress-info">
+		      <span class="progress-stage">{{ getCurrentStageText() }}</span>
+		      <span class="progress-percentage">{{ progressValue }}%</span>
+		    </div>
+		    <p-progressBar [value]="progressValue"></p-progressBar>
 		  </div>
 		</div>
 		

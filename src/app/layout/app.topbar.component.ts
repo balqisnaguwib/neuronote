@@ -9,7 +9,7 @@ import { MessageService } from 'primeng/api';
 @Component({
     selector: 'app-topbar',
     templateUrl: './app.topbar.component.html',
-    styleUrls: ['./topbar.component.css'],
+    styleUrls: ['./app.topbar.component.css'],
     providers: [MessageService]
 })
 export class AppTopBarComponent implements OnInit {

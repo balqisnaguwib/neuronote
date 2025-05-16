@@ -47,6 +47,8 @@ export class DashboardComponent implements OnInit {
     showSuccess: boolean = false;
     visible: boolean = false;
     isSubmitting: boolean = false;
+    reportSent: boolean = false;
+    confirmVisible: boolean = false;
 
     constructor(
         private messageService: MessageService,
@@ -119,61 +121,63 @@ export class DashboardComponent implements OnInit {
         });
     }
 
-    async sendReport() {
-        // Prevent multiple submissions
-        if (this.isSubmitting) return;
+    // Method to open confirmation dialog
+    confirmSendReport() {
+        this.confirmVisible = true;
+    }
+
+    // Method to process after confirmation
+    processReport() {
+        this.confirmVisible = false;
+        
+        // Prevent multiple submissions or if already sent
+        if (this.isSubmitting || this.reportSent) return;
         this.isSubmitting = true;
         
-        try {
-            // Confirm before submission
-            this.confirmationService.confirm({
-                message: 'Adakah anda pasti untuk menghantar laporan ini?',
-                header: 'Pengesahan Penghantaran',
-                icon: 'pi pi-exclamation-triangle',
-                acceptLabel: 'Ya, Hantar',
-                rejectLabel: 'Batal',
-                accept: () => {
-                    // Simulate API call to submit report
-                    setTimeout(() => {
-                        console.log('Report submitted:', this.draftReport);
-                        // Show success message with animation
-                        this.messageService.add({ 
-                            severity: 'success', 
-                            summary: 'Laporan Berjaya Dihantar', 
-                            detail: 'Laporan polis anda telah dihantar dan disimpan',
-                            life: 5000
-                        });
-                        
-                        // Update session storage if needed
-                        this.draftReportList.laporan_polis = this.draftReport;
-                        window.sessionStorage.setItem('draftReport', JSON.stringify(this.draftReportList));
-                        
-                        // Reset submission flag
-                        this.isSubmitting = false;
-                        
-                        // Show completion screen or navigate to another page after delay
-                        setTimeout(() => {
-                            // Here you could navigate to a confirmation page or reset the app
-                            // For now, we'll just reset and go back to personal info
-                            window.sessionStorage.removeItem('draftReport');
-                            this.router.navigate(['/personalinfo']);
-                        }, 3000);
-                    }, 1500);
-                },
-                reject: () => {
-                    // Reset submission flag on cancel
-                    this.isSubmitting = false;
-                }
-            });
-        } catch (error) {
-            console.error('Error submitting report:', error);
+        // Simulate API call to submit report
+        setTimeout(() => {
+            console.log('Report submitted:', this.draftReport);
+            
+            // Set report as sent
+            this.reportSent = true;
+            
+            // Show success message
             this.messageService.add({ 
-                severity: 'error', 
-                summary: 'Ralat', 
-                detail: 'Masalah menghantar laporan. Sila cuba lagi',
-                life: 3000
+                severity: 'success', 
+                summary: 'Laporan Berjaya Dihantar', 
+                detail: 'Laporan polis anda telah dihantar dan disimpan',
+                life: 7000
             });
+            
+            // Show reference number after a short delay
+            setTimeout(() => {
+                this.messageService.add({ 
+                    severity: 'info', 
+                    summary: 'Nombor Rujukan', 
+                    detail: `Nombor rujukan laporan anda: POL-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
+                    life: 10000
+                });
+            }, 1000);
+            
+            // Update session storage
+            this.draftReportList.laporan_polis = this.draftReport;
+            this.draftReportList.status = 'DIHANTAR';
+            this.draftReportList.tarikh_hantar = new Date().toISOString();
+            window.sessionStorage.setItem('draftReport', JSON.stringify(this.draftReportList));
+            
+            // Reset submission flag
             this.isSubmitting = false;
-        }
+            
+            // Navigate after delay
+            setTimeout(() => {
+                window.sessionStorage.removeItem('draftReport');
+                this.router.navigate(['/personalinfo']);
+            }, 5000);
+        }, 1500);
+    }
+
+    // Original method for backward compatibility
+    async sendReport() {
+        this.confirmSendReport();
     }
 }

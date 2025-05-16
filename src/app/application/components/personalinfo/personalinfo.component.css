@@ -1,291 +1,505 @@
 /* Main Container */
 .personalinfo-container {
-    padding: 2rem;
-    max-width: 1200px;
-    margin: 0 auto;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.main-card {
+  border-radius: var(--border-radius-large);
+  background-color: var(--surface-card);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
+}
+
+/* Header Section */
+.personalinfo-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.personalinfo-header .title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.personalinfo-header .subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* MyKad Upload Section */
+.mykad-upload-section {
+  background-color: var(--light-blue);
+  border-radius: var(--border-radius-medium);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  transition: all 0.3s ease;
+}
+
+.mykad-upload-section.with-data {
+  background-color: rgba(52, 199, 89, 0.1);
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.upload-content {
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-icon {
+  font-size: 3rem;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+}
+
+.upload-content h3 {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.upload-content p {
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.id-upload-button {
+  margin-top: 1rem;
+}
+
+.id-upload-button :host ::ng-deep .p-button {
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+}
+
+.upload-info {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-small);
+  font-size: 0.9rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.file-info i {
+  color: var(--primary-blue);
+}
+
+/* Enhanced Progress Container */
+.progress-container {
+  width: 100%;
+  max-width: 550px;
+  margin: 2rem auto;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  animation: floatUp 0.5s ease-out;
+  border: 1px solid rgba(0, 117, 255, 0.1);
+}
+
+.progress-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Header with stage information */
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.progress-stage-info {
+  display: flex;
+  align-items: center;
+}
+
+.stage-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--light-blue), var(--primary-blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 1rem;
+  color: white;
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+  box-shadow: 0 5px 15px rgba(0, 117, 255, 0.3);
+}
+
+.progress-stage {
+  font-weight: 500;
+  color: var(--text-primary);
+  font-size: 1.1rem;
+}
+
+.progress-percentage {
+  font-weight: 700;
+  color: var(--primary-blue);
+  font-size: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 117, 255, 0.2);
+}
+
+/* Progress Bar Styling */
+:host ::ng-deep .p-progressbar {
+  height: 16px !important;
+  border-radius: var(--border-radius-pill);
+  background: #f0f2f5;
+  margin-bottom: 1.2rem;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-progressbar .p-progressbar-value {
+  background: linear-gradient(90deg, var(--primary-blue), var(--primary-orange));
+  border-radius: var(--border-radius-pill);
+  transition: width 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+:host ::ng-deep .p-progressbar .p-progressbar-value::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+/* Stages progress visualization */
+.stages-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.stages-container::before {
+  content: "";
+  position: absolute;
+  top: 15px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #f0f2f5;
+  z-index: 1;
+}
+
+.stage-point {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  flex: 1;
+}
+
+.stage-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: #f0f2f5;
+  border: 2px solid #e0e0e5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.stage-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
+  max-width: 80px;
+  transition: all 0.3s ease;
+}
+
+.stage-point.active .stage-dot {
+  background: var(--primary-blue);
+  border: 2px solid var(--primary-blue);
+  color: white;
+  box-shadow: 0 3px 8px rgba(0, 117, 255, 0.4);
+  transform: scale(1.2);
+}
+
+.stage-point.completed .stage-dot {
+  background: var(--success-color);
+  border: 2px solid var(--success-color);
+  color: white;
+}
+
+.stage-point.active .stage-label {
+  color: var(--primary-blue);
+  font-weight: 500;
+}
+
+.stage-point.completed .stage-label {
+  color: var(--success-color);
+}
+
+/* Cancel option */
+.cancel-option {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.cancel-button {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-pill);
+  transition: all 0.2s ease;
+}
+
+.cancel-button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: var(--danger-color);
+}
+
+/* Status message */
+.status-message {
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-top: 0.5rem;
+}
+
+/* Animations */
+@keyframes floatUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .main-card {
-    border-radius: var(--border-radius-large);
-    background-color: var(--surface-card);
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
-    padding: 2rem;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  /* Header Section */
-  .personalinfo-header {
-    text-align: center;
-    margin-bottom: 2rem;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 117, 255, 0.4);
   }
-  
-  .personalinfo-header .title {
-    font-size: 2rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.5rem;
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 117, 255, 0);
   }
-  
-  .personalinfo-header .subtitle {
-    color: var(--text-secondary);
-    font-size: 1rem;
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 117, 255, 0);
   }
-  
-  /* MyKad Upload Section */
-  .mykad-upload-section {
-    background-color: var(--light-blue);
-    border-radius: var(--border-radius-medium);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    transition: all 0.3s ease;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
   }
-  
-  .mykad-upload-section.with-data {
-    background-color: rgba(var(--success-color), 0.1);
+  100% {
+    transform: translateX(100%);
   }
-  
-  .upload-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
   }
-  
-  .upload-content {
-    max-width: 500px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  40% {
+    transform: translateY(-5px);
   }
-  
-  .upload-icon {
-    font-size: 3rem;
-    color: var(--primary-blue);
-    margin-bottom: 1rem;
+  60% {
+    transform: translateY(-3px);
   }
-  
-  .upload-content h3 {
-    font-size: 1.4rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+}
+
+/* Extracted Info */
+.extracted-info {
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.info-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.success-icon {
+  color: var(--success-color);
+  font-size: 1.5rem;
+}
+
+.extracted-info h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.extracted-info p {
+  color: var(--text-secondary);
+  margin-bottom: 0;
+}
+
+/* Form Section */
+.personalinfo-form {
+  margin-top: 2rem;
+  animation: fadeIn 0.5s ease;
+}
+
+.section-divider {
+  font-weight: 500;
+  color: var(--text-secondary);
+  background-color: var(--surface-card);
+  padding: 0 1rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  margin-top: 1.5rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-field.full-width {
+  grid-column: span 2;
+}
+
+.form-field label {
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text-primary);
+}
+
+.form-field .p-input-icon-left {
+  width: 100%;
+}
+
+.form-field .p-input-icon-left i {
+  color: var(--text-secondary);
+}
+
+.form-field input, 
+.form-field textarea {
+  width: 100%;
+  transition: all 0.3s ease;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 0 2px rgba(0, 117, 255, 0.2);
+}
+
+.p-error {
+  color: var(--danger-color);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* Submit Button */
+.form-submit {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.form-submit :host ::ng-deep .p-button {
+  padding: 0.75rem 2rem;
+  background-color: var(--primary-blue);
+  border-color: var(--primary-blue);
+  font-weight: 500;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-  
-  .upload-content p {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    line-height: 1.5;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .id-upload-button {
-    margin-top: 1rem;
-  }
-  
-  .id-upload-button :deep(.p-button) {
-    background-color: var(--primary-blue);
-    border-color: var(--primary-blue);
-  }
-  
-  .upload-info {
-    margin-top: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .file-info {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    background-color: white;
-    padding: 0.5rem 1rem;
-    border-radius: var(--border-radius-small);
-    font-size: 0.9rem;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-  }
-  
-  .file-info i {
-    color: var(--primary-blue);
-  }
-  
-  .custom-spinner {
-    width: 30px;
-    height: 30px;
-  }
-  
-  /* Extracted Info */
-  .extracted-info {
-    text-align: center;
-    animation: fadeIn 0.5s ease;
-  }
-  
-  .info-header {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-bottom: 0.5rem;
-  }
-  
-  .success-icon {
-    color: var(--success-color);
-    font-size: 1.5rem;
-  }
-  
-  .extracted-info h3 {
-    font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-  }
-  
-  .extracted-info p {
-    color: var(--text-secondary);
-    margin-bottom: 0;
-  }
-  
-  /* Form Section */
-  .personalinfo-form {
-    margin-top: 2rem;
-    animation: fadeIn 0.5s ease;
-  }
-  
-  .section-divider {
-    font-weight: 500;
-    color: var(--text-secondary);
-    background-color: var(--surface-card);
-    padding: 0 1rem;
-  }
-  
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
   .form-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    margin-top: 1.5rem;
-  }
-  
-  .form-field {
-    display: flex;
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
   
   .form-field.full-width {
-    grid-column: span 2;
+    grid-column: span 1;
   }
   
-  .form-field label {
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+  .personalinfo-container {
+    padding: 1rem;
   }
   
-  .form-field .p-input-icon-left {
-    width: 100%;
+  .main-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .personalinfo-header .title {
+    font-size: 1.5rem;
   }
   
-  .form-field .p-input-icon-left i {
-    color: var(--text-secondary);
+  .upload-content h3 {
+    font-size: 1.2rem;
   }
   
-  .form-field input, 
-  .form-field textarea {
-    width: 100%;
-    transition: all 0.3s ease;
+  .mykad-upload-section {
+    padding: 1.5rem;
   }
-  
-  .form-field input:focus,
-  .form-field textarea:focus {
-    border-color: var(--primary-blue);
-    box-shadow: 0 0 0 2px rgba(0, 117, 255, 0.2);
-  }
-  
-  .p-error {
-    color: var(--danger-color);
-    font-size: 0.8rem;
-    margin-top: 0.3rem;
-  }
-  
-  /* Submit Button */
-  .form-submit {
-    display: flex;
-    justify-content: center;
-    margin-top: 2rem;
-  }
-  
-  .form-submit :deep(.p-button) {
-    padding: 0.75rem 2rem;
-    background-color: var(--primary-blue);
-    border-color: var(--primary-blue);
-    font-weight: 500;
-  }
-  
-  .form-submit :deep(.p-button:hover) {
-    background-color: var(--secondary-blue);
-    border-color: var(--secondary-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Calendar Styling */
-  :deep(.p-calendar) {
-    width: 100%;
-  }
-  
-  :deep(.p-calendar .p-inputtext) {
-    width: 100%;
-  }
-  
-  :deep(.p-dropdown) {
-    width: 100%;
-  }
-  
-  :deep(.p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight) {
-    background-color: var(--light-blue);
-    color: var(--primary-blue);
-  }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  /* Responsive Adjustments */
-  @media (max-width: 992px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-    
-    .form-field.full-width {
-      grid-column: span 1;
-    }
-    
-    .personalinfo-container {
-      padding: 1rem;
-    }
-    
-    .main-card {
-      padding: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 576px) {
-    .personalinfo-header .title {
-      font-size: 1.5rem;
-    }
-    
-    .upload-content h3 {
-      font-size: 1.2rem;
-    }
-    
-    .mykad-upload-section {
-      padding: 1.5rem;
-    }
-  }
+}
