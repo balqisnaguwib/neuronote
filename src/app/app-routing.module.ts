@@ -2,9 +2,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { NotfoundComponent } from './application/components/notfound/notfound.component';
 import { AppLayoutComponent } from './layout/app.layout.component';
-import { PersonalInfoComponent } from './application/components/personalinfo/personalinfo.component';
-
-
 
 @NgModule({
     imports: [
@@ -16,7 +13,7 @@ import { PersonalInfoComponent } from './application/components/personalinfo/per
                     children: [
                         {
                             path: '',
-                            redirectTo: 'personalinfo', // 👈 Redirect base path to 'personalinfo'
+                            redirectTo: 'personalinfo', // Redirect base path to 'personalinfo'
                             pathMatch: 'full'
                         },
                         {
@@ -39,6 +36,13 @@ import { PersonalInfoComponent } from './application/components/personalinfo/per
                                 import(
                                     './application/components/dashboard/dashboard.module'
                                 ).then((m) => m.DashboardModule),
+                        },
+                        {
+                            path: 'success', // New success page route
+                            loadChildren: () =>
+                                import(
+                                    './application/components/success/success-page.module'
+                                ).then((m) => m.SuccessPageModule),
                         },
                     ],
                 },

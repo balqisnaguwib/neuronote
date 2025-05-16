@@ -1,0 +1,56 @@
+<div class="success-container" @fadeIn>
+    <div class="success-card">
+      <div class="success-icon-container">
+        <i class="pi pi-check-circle success-icon"></i>
+      </div>
+      
+      <h1 class="success-title">Laporan Berjaya Dihantar!</h1>
+      <p class="success-subtitle">Terima kasih. Laporan polis anda telah dihantar untuk diproses.</p>
+      
+      <div class="reference-container">
+        <div class="reference-label">Nombor Rujukan:</div>
+        <div class="reference-number">{{ referenceNumber }}</div>
+        <p class="reference-info">Sila simpan nombor rujukan ini untuk semakan status laporan anda.</p>
+      </div>
+      
+      <div class="success-steps">
+        <div class="step">
+          <div class="step-icon">
+            <i class="pi pi-clock"></i>
+          </div>
+          <div class="step-content">
+            <h3>Pemprosesan Laporan</h3>
+            <p>Laporan anda sedang diproses oleh sistem. Ini mungkin mengambil masa sehingga 24 jam.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-icon">
+            <i class="pi pi-envelope"></i>
+          </div>
+          <div class="step-content">
+            <h3>Pengesahan Emel</h3>
+            <p>Anda akan menerima emel pengesahan dalam masa 1-2 jam.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-icon">
+            <i class="pi pi-phone"></i>
+          </div>
+          <div class="step-content">
+            <h3>Panggilan Susulan</h3>
+            <p>Pihak polis akan menghubungi anda untuk tindakan selanjutnya.</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="success-actions">
+        <p-button label="Kembali ke Halaman Utama" icon="pi pi-home" (click)="returnHome()"></p-button>
+      </div>
+      
+      <div class="redirect-notice">
+        <p>Anda akan dibawa ke halaman utama dalam <span class="countdown">{{ countdown }}</span> saat</p>
+      </div>
+    </div>
+  </div>

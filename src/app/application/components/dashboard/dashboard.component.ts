@@ -127,54 +127,45 @@ export class DashboardComponent implements OnInit {
     }
 
     // Method to process after confirmation
-    processReport() {
-        this.confirmVisible = false;
+    // Method to process after confirmation in dashboard.component.ts
+processReport() {
+    this.confirmVisible = false;
+    
+    // Prevent multiple submissions or if already sent
+    if (this.isSubmitting || this.reportSent) return;
+    this.isSubmitting = true;
+    
+    // Simulate API call to submit report
+    setTimeout(() => {
+        console.log('Report submitted:', this.draftReport);
         
-        // Prevent multiple submissions or if already sent
-        if (this.isSubmitting || this.reportSent) return;
-        this.isSubmitting = true;
+        // Set report as sent
+        this.reportSent = true;
         
-        // Simulate API call to submit report
+        // Show success message
+        this.messageService.add({ 
+            severity: 'success', 
+            summary: 'Laporan Berjaya Dihantar', 
+            detail: 'Laporan polis anda telah dihantar dan disimpan',
+            life: 3000
+        });
+        
+        // Update session storage
+        this.draftReportList.laporan_polis = this.draftReport;
+        this.draftReportList.status = 'DIHANTAR';
+        this.draftReportList.tarikh_hantar = new Date().toISOString();
+        window.sessionStorage.setItem('draftReport', JSON.stringify(this.draftReportList));
+        
+        // Reset submission flag
+        this.isSubmitting = false;
+        
+        // Redirect to the success page instead of personalinfo
         setTimeout(() => {
-            console.log('Report submitted:', this.draftReport);
-            
-            // Set report as sent
-            this.reportSent = true;
-            
-            // Show success message
-            this.messageService.add({ 
-                severity: 'success', 
-                summary: 'Laporan Berjaya Dihantar', 
-                detail: 'Laporan polis anda telah dihantar dan disimpan',
-                life: 7000
-            });
-            
-            // Show reference number after a short delay
-            setTimeout(() => {
-                this.messageService.add({ 
-                    severity: 'info', 
-                    summary: 'Nombor Rujukan', 
-                    detail: `Nombor rujukan laporan anda: POL-${new Date().getFullYear()}-${Math.floor(10000 + Math.random() * 90000)}`,
-                    life: 10000
-                });
-            }, 1000);
-            
-            // Update session storage
-            this.draftReportList.laporan_polis = this.draftReport;
-            this.draftReportList.status = 'DIHANTAR';
-            this.draftReportList.tarikh_hantar = new Date().toISOString();
-            window.sessionStorage.setItem('draftReport', JSON.stringify(this.draftReportList));
-            
-            // Reset submission flag
-            this.isSubmitting = false;
-            
-            // Navigate after delay
-            setTimeout(() => {
-                window.sessionStorage.removeItem('draftReport');
-                this.router.navigate(['/personalinfo']);
-            }, 5000);
-        }, 1500);
-    }
+            window.sessionStorage.removeItem('draftReport');
+            this.router.navigate(['/success']);
+        }, 2000);
+    }, 1500);
+}
 
     // Original method for backward compatibility
     async sendReport() {
